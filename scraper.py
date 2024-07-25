@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from util import url_builder
 import aiohttp
 import asyncio
-from DB import Query
+from backend.DB import Query
 from log_config import get_logger
 from DataTypes import Query, Date
 from datetime import datetime, timedelta
@@ -24,7 +24,7 @@ class Scraper:
     async def get_data(self) -> Query:
         async with aiohttp.ClientSession() as session:
             page_content = await self.fetch_page(session)
-            self.parse_contents(page_content)
+            self.parse_gas_prices(page_content)
             
     def convert_time_passed_to_date_time(self, time_passed: str) -> Date:
         logger.debug(f"Converting time passed to date time: {time_passed}")
@@ -35,7 +35,22 @@ class Scraper:
         logger.debug(f"Converted time: {date}")
         return date
 
-    def parse_contents(self, content: str):
+    def parse_available_stations(self, content: str):
+        soup = BeautifulSoup(content, 'html.parser')
+        dropdown = soup.find('select', {'id': 'ctl00_Content_P_PSC1_lstStations'})
+        options = dropdown.find_all('option')
+        option_values = [option.text for option in options]
+        return option_values
+        
+        
+    def parse_available_areas(self, content: str):
+        soup = BeautifulSoup(content, 'html.parser')
+        dropdown = soup.find('select', {'id': 'ctl00_Content_P_PSC1_lstAreas'})
+        options = dropdown.find_all('option')
+        option_values = [option.text for option in options]
+        return option_values
+
+    def parse_gas_prices(self, content: str):
         soup = BeautifulSoup(content, 'html.parser')
         rows = soup.find_all('tr') 
         

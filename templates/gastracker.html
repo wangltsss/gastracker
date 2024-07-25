@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Station Form</title>
+    <link rel="stylesheet" href="../static/css/gastracker.css">
+</head>
+<body>
+    <div class="form-container">
+        <form action="#" method="POST">
+            <h2>Subscribe</h2>
+            <div class="form-group">
+                <label for="station">Station</label>
+                <input type="text" id="station" name="station" required>
+            </div>
+            <div class="form-group">
+                <label for="area">Area</label>
+                <input type="text" id="area" name="area" required>
+            </div>
+            <div class="form-group">
+                <label for="fuel-grade">Fuel Grade</label>
+                <select id="fuel-grade" name="fuel-grade" required>
+                    <option value="regular">Regular</option>
+                    <option value="medium">Medium</option>
+                    <option value="premium">Premium</option>
+                </select>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
